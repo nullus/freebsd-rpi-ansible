@@ -1,0 +1,20 @@
+---
+- name: Install Airplay package
+  pkgng:
+    name: shairport-sync
+    state: present
+- name: Start D-Bus service
+  service:
+    name: dbus
+    enabled: yes
+    state: started
+- name: Start mDNS service
+  service:
+    name: avahi-daemon
+    enabled: yes
+    state: started
+- name: Start Airplay service
+  service:
+    name: shairport-sync
+    enabled: yes
+    state: started

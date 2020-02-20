@@ -1,0 +1,6 @@
+---
+- name: restart dhclient
+  service: 
+    name: dhclient
+    state: restarted
+    arguments: "{{ network_interface }}"
