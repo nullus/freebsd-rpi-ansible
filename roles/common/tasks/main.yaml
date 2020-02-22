@@ -1,0 +1,21 @@
+---
+- name: Update dhclient configuration
+  template:
+    src: dhclient.conf.j2
+    dest: /etc/dhclient.conf
+  notify: restart dhclient
+- meta: flush_handlers
+- name: Install root CA certificates
+  pkgng:
+    name: ca_root_nss
+    state: latest
+- name: Synchronise clock on NTP start
+  sysrc:
+    name: ntpd_sync_on_start
+    state: present
+    value: "YES"
+- name: Enable NTP
+  service:
+    name: ntpd
+    enabled: yes
+    state: started
