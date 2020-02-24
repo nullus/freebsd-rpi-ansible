@@ -48,6 +48,22 @@
         sendmail_msp_queue_enable="NO"
       dest: /etc/rc.conf.d/sendmail
     notify: restart sendmail
+- name: Send periodic email to admin
+  copy:
+    content: |
+      daily_output="{{ admin_email }}"
+      daily_status_security_output="{{ admin_email }}"
+      weekly_output="{{ admin_email }}"
+      weekly_status_security_output="{{ admin_email }}"
+      monthly_output="{{ admin_email }}"
+      monthly_status_security_output="{{ admin_email }}"
+    dest: /etc/periodic.conf
+- name: Send cron email to admin
+  copy:
+    content: |
+      cron_flags="-m {{ admin_email }}"
+    dest: /etc/rc.conf.d/cron
+  notify: restart cron
 - name: Enable NTP
   service:
     name: ntpd

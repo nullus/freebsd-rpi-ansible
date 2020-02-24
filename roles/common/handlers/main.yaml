@@ -15,3 +15,7 @@
   service:
     name: sendmail
     state: restarted
+- name: restart cron
+  service:
+    name: cron
+    state: restarted
