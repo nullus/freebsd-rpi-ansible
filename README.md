@@ -14,10 +14,13 @@
 5. Run playbook to configure device:
     ansible-playbook -i hosts site.yaml
 
+### Dependencies
+
+- library/ includes modules from https://github.com/dlundgren/ansible-freebsd-modules
+
 ### To Do
 
 - Rewrite bootstrap as raw/no facts playbook
-- Restrict SSH to key only
 - Remove root password
 - Add caching DNS service
 - Secure, and open NTP service

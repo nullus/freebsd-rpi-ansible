@@ -4,3 +4,7 @@
     name: dhclient
     state: restarted
     arguments: "{{ network_interface }}"
+- name: restart sshd
+  service:
+    name: sshd
+    state: reloaded
