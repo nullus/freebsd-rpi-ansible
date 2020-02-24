@@ -18,3 +18,8 @@
     name: shairport-sync
     enabled: yes
     state: started
+- name: Set mixer level
+  copy:
+    content: 'vol 100:100'
+    dest: /var/db/mixer0-state
+  notify: start mixer

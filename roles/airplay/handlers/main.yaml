@@ -1,0 +1,5 @@
+---
+- name: start mixer
+  service:
+    name: mixer
+    state: started
