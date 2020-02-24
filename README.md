@@ -24,7 +24,10 @@
 ### To Do
 
 - Rewrite bootstrap as raw/no facts playbook
-- Remove root password
 - Add caching DNS service
 - Secure, and open NTP service
 - Ship logs externally (e.g. graylog?)
+- Set mixer level on boot
+- Make Airplay name more descriptive
+- Use facts to determine network interface name?
+- Configure static addresses/IPv6

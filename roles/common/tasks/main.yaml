@@ -10,6 +10,10 @@
   notify: restart dhclient
 # Subsequent tasks require network configuration, force dhclient handler
 - meta: flush_handlers
+- name: Set root password
+  user:
+    name: root
+    password: '{{ root_password_hash }}'
 - name: Disable SSH password login
   lineinfile:
     path: /etc/ssh/sshd_config
@@ -69,3 +73,7 @@
     name: ntpd
     enabled: yes
     state: started
+- name: Set user password
+  user:
+    name: freebsd
+    password: '*'
