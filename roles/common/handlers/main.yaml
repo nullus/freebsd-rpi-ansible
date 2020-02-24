@@ -8,3 +8,10 @@
   service:
     name: sshd
     state: reloaded
+- name: rebuild aliases
+  command:
+    argv: ['newaliases']
+- name: restart sendmail
+  service:
+    name: sendmail
+    state: restarted

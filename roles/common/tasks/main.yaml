@@ -1,7 +1,7 @@
 ---
 - name: Set hostname
   hostname:
-    name: '{{ inventory_hostname }}'
+    name: '{{ inventory_hostname }}.disasterarea.ninja'
     use: freebsd
 - name: Update dhclient configuration
   template:
@@ -25,6 +25,29 @@
     content: |
       ntpd_sync_on_start="YES"
     dest: /etc/rc.conf.d/ntpd
+- name: Forward root email
+  lineinfile:
+    path: /etc/aliases
+    regexp: '^#\s+root:\s+me@my.domain'
+    line: 'root:	{{ admin_email }}'
+  notify: rebuild aliases
+- name: Config sendmail
+  block:
+  - name: Remove sendmail config
+    lineinfile:
+      path: /etc/rc.conf
+      regexp: '^sendmail_.*'
+      state: absent
+    notify: restart sendmail
+  - name: Override default sendmail config
+    copy:
+      content: |
+        sendmail_enable="NO"
+        sendmail_submit_enable="YES"
+        sendmail_outbound_enable="NO"
+        sendmail_msp_queue_enable="NO"
+      dest: /etc/rc.conf.d/sendmail
+    notify: restart sendmail
 - name: Enable NTP
   service:
     name: ntpd

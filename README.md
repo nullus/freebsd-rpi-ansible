@@ -13,9 +13,13 @@
 4. Run bootstrap script on RPi2:
 
        sh bootstrap.sh pubkey
+5. Create environment specific variables in env.yaml:
+
+       ---
+       admin_email: <your email>
 5. Run playbook to configure device:
 
-       ansible-playbook -i hosts site.yaml
+       ansible-playbook -e @env.yaml -i hosts site.yaml
 
 ### To Do
 
