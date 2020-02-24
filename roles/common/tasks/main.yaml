@@ -3,11 +3,6 @@
   hostname:
     name: '{{ inventory_hostname }}'
     use: freebsd
-- name: Set hostname on boot
-  sysrc:
-    name: hostname
-    state: present
-    value: '{{ inventory_hostname }}'
 - name: Update dhclient configuration
   template:
     src: dhclient.conf.j2
@@ -25,11 +20,11 @@
   pkgng:
     name: ca_root_nss
     state: latest
-- name: Synchronise clock on NTP start
-  sysrc:
-    name: ntpd_sync_on_start
-    state: present
-    value: "YES"
+- name: Config NTP
+  copy:
+    content: |
+      ntpd_sync_on_start="YES"
+    dest: /etc/rc.conf.d/ntpd
 - name: Enable NTP
   service:
     name: ntpd
