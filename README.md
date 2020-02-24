@@ -17,10 +17,6 @@
 
        ansible-playbook -i hosts site.yaml
 
-### Dependencies
-
-- library/ includes modules from https://github.com/dlundgren/ansible-freebsd-modules
-
 ### To Do
 
 - Rewrite bootstrap as raw/no facts playbook
