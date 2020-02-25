@@ -24,8 +24,7 @@
 ### To Do
 
 - Rewrite bootstrap as raw/no facts playbook
-- Secure, and open NTP service
 - Ship logs externally (e.g. graylog?)
 - Make Airplay name more descriptive
-- Use facts to determine network interface name?
+- ~~Use facts to determine network interface name?~~ This probably doesn't make sense once we have configured addresses statically
 - Configure static addresses/IPv6

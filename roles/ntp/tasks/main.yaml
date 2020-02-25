@@ -1,0 +1,17 @@
+---
+- name: Enable ntpd
+  service:
+    name: ntpd
+    enabled: yes
+  notify: restart ntpd
+- name: Synchronise ntpd on startup
+  copy:
+    content: |
+      ntpd_sync_on_start="YES"
+    dest: /etc/rc.conf.d/ntpd
+  notify: restart ntpd
+- name: Config ntpd
+  copy:
+    src: ntp.conf
+    dest: /etc/ntp.conf
+  notify: restart ntpd

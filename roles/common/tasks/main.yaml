@@ -24,11 +24,6 @@
   pkgng:
     name: ca_root_nss
     state: latest
-- name: Config NTP
-  copy:
-    content: |
-      ntpd_sync_on_start="YES"
-    dest: /etc/rc.conf.d/ntpd
 - name: Forward root email
   lineinfile:
     path: /etc/aliases
@@ -68,11 +63,6 @@
       cron_flags="-m {{ admin_email }}"
     dest: /etc/rc.conf.d/cron
   notify: restart cron
-- name: Enable NTP
-  service:
-    name: ntpd
-    enabled: yes
-    state: started
 - name: Set user password
   user:
     name: freebsd
