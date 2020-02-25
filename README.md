@@ -24,7 +24,6 @@
 ### To Do
 
 - Rewrite bootstrap as raw/no facts playbook
-- Add caching DNS service
 - Secure, and open NTP service
 - Ship logs externally (e.g. graylog?)
 - Make Airplay name more descriptive
