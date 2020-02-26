@@ -5,4 +5,5 @@
   - common
   - rdns
   - ntp
+  - logging
   - airplay

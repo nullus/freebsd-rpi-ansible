@@ -23,8 +23,8 @@
 
 ### To Do
 
-- Rewrite bootstrap as raw/no facts playbook
-- Ship logs externally (e.g. graylog?)
+- Rewrite bootstrap as raw/no facts playbook (implement for upgrade?)
+- ~~Ship logs externally (e.g. graylog?)~~ somewhat working Loggly config, but it's a bit bogus right now
 - Make Airplay name more descriptive
 - ~~Use facts to determine network interface name?~~ This probably doesn't make sense once we have configured addresses statically
 - Configure static addresses/IPv6
