@@ -27,4 +27,4 @@
 - ~~Ship logs externally (e.g. graylog?)~~ somewhat working Loggly config, but it's a bit bogus right now
 - Make Airplay name more descriptive
 - ~~Use facts to determine network interface name?~~ This probably doesn't make sense once we have configured addresses statically
-- Configure static addresses/IPv6
+- Determine a task/handler configuration for transition to provisioned

@@ -1,15 +1,4 @@
 ---
-- name: Set hostname
-  hostname:
-    name: '{{ inventory_hostname }}.disasterarea.ninja'
-    use: freebsd
-- name: Update dhclient configuration
-  template:
-    src: dhclient.conf.j2
-    dest: /etc/dhclient.conf
-  notify: restart dhclient
-# Subsequent tasks require network configuration, force dhclient handler
-- meta: flush_handlers
 - name: Set root password
   user:
     name: root

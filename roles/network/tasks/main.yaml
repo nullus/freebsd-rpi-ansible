@@ -1,0 +1,34 @@
+---
+# These tasks don't trigger any runtime changes, right now a reboot is
+# necessary to apply the configuration
+- name: Set hostname
+  hostname:
+    name: '{{ inventory_hostname }}.{{ site_domain }}'
+    use: freebsd
+- name: Configure interfaces
+  copy:
+    content: |
+      ifconfig_{{ network_interface }}_ipv6="inet6 accept_rtadv"
+      ifconfig_{{ network_interface }}_aliases="{{ hostvars[inventory_hostname][inventory_hostname]["network_aliases"] }}"
+    dest: /etc/rc.conf.d/netif
+- name: Enable rtsold
+  service:
+    name: rtsold
+    enabled: yes
+- name: Configure routing
+  copy:
+    content: |
+      defaultrouter="{{ default_router }}"
+    dest: /etc/rc.conf.d/routing
+- name: Configure name resolution
+  copy:
+    content: |
+      search {{ site_domain }}
+      nameserver ::1
+      nameserver 127.0.0.1
+    dest: /etc/resolv.conf
+- name: Remove default DHCP
+  lineinfile:
+    path: /etc/rc.conf
+    regexp: '^ifconfig_DEFAULT'
+    state: absent
