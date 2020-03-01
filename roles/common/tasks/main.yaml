@@ -15,7 +15,7 @@
     blockinfile:
       insertafter: '^#AddressFamily any'
       block: |
-        {% for listen_address in hostvars[inventory_hostname]["services"][inventory_hostname]["ssh"]["addresses"] %}
+        {% for listen_address in services[inventory_hostname]["ssh"]["addresses"] %}
         ListenAddress {{ listen_address }}
         {% endfor %}
       path: /etc/ssh/sshd_config

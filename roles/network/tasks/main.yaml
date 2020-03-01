@@ -9,7 +9,7 @@
   copy:
     content: |
       ifconfig_{{ network_interface }}_ipv6="inet6 accept_rtadv"
-      ifconfig_{{ network_interface }}_aliases="{{ hostvars[inventory_hostname][inventory_hostname]["network_aliases"] }}"
+      ifconfig_{{ network_interface }}_aliases="{{ network_aliases[inventory_hostname] }}"
     dest: /etc/rc.conf.d/netif
 - name: Enable rtsold
   service:
