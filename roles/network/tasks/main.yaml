@@ -15,6 +15,12 @@
   service:
     name: rtsold
     enabled: yes
+- name: Disable rtsold resolvconf update
+  copy:
+    # Use /usr/bin/true to disable updating resolv.conf
+    content: |
+      rtsold_flags="-a -R /usr/bin/true"
+    dest: /etc/rc.conf.d/rtsold
 - name: Configure routing
   copy:
     content: |
