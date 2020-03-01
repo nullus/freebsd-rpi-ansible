@@ -13,11 +13,17 @@
     name: avahi-daemon
     enabled: yes
     state: started
-- name: Start Airplay service
+- name: Configure Airplay service
+  lineinfile:
+    regexp: '^//\s+name = "%H";'
+    line: '      name = "{{ services[inventory_hostname]["airplay"]["name"] }}";'
+    path: /usr/local/etc/shairport-sync.conf
+  notify: restart shairport-sync
+- name: Enable Airplay service
   service:
     name: shairport-sync
     enabled: yes
-    state: started
+  notify: restart shairport-sync
 - name: Set mixer level
   copy:
     content: 'vol 100:100'

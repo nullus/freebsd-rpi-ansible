@@ -38,6 +38,8 @@
            ssh:
              addresses:
              - ...
+           airplay:
+             name: ...
 
 5. Run playbook to configure device:
 
@@ -47,5 +49,4 @@
 
 - Rewrite bootstrap as raw/no facts playbook (implement for upgrade?)
 - ~~Ship logs externally (e.g. graylog?)~~ somewhat working Loggly config, but it's a bit bogus right now
-- Make Airplay name more descriptive
 - Determine a task/handler configuration for transition to provisioned
