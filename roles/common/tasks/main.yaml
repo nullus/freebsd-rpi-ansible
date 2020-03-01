@@ -3,12 +3,23 @@
   user:
     name: root
     password: '{{ root_password_hash }}'
-- name: Disable SSH password login
-  lineinfile:
-    path: /etc/ssh/sshd_config
-    regexp: '^#ChallengeResponseAuthentication'
-    line: ChallengeResponseAuthentication no
-  notify: restart sshd
+- name: Configure sshd
+  block:
+  - name: Disable password authentication 
+    lineinfile:
+      path: /etc/ssh/sshd_config
+      regexp: '^#ChallengeResponseAuthentication'
+      line: ChallengeResponseAuthentication no
+    notify: restart sshd
+  - name: Configure ssh interfaces
+    blockinfile:
+      insertafter: '^#AddressFamily any'
+      block: |
+        {% for listen_address in hostvars[inventory_hostname]["services"][inventory_hostname]["ssh"]["addresses"] %}
+        ListenAddress {{ listen_address }}
+        {% endfor %}
+      path: /etc/ssh/sshd_config
+    notify: restart sshd
 - name: Install root CA certificates
   pkgng:
     name: ca_root_nss

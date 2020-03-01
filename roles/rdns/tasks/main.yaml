@@ -4,17 +4,17 @@
     name: unbound
     state: present
 - name: Config Unbound
-  copy:
-    src: unbound.conf
+  template:
+    src: unbound.conf.j2
     dest: /usr/local/etc/unbound/unbound.conf
-  notify: reload unbound
+  notify: restart unbound
 - name: Seed named.cache
   command:
     # Fetch root hints, retry on (soft) error
     argv: ['fetch', '-a', 'https://www.internic.net/domain/named.cache']
     chdir: /usr/local/etc/unbound
     creates: /usr/local/etc/unbound/named.cache
-  notify: reload unbound
+  notify: restart unbound
 - name: Schedule named.cache refresh
   copy:
     content: |
@@ -22,7 +22,7 @@
       PATH=/sbin:/bin:/usr/sbin:/usr/bin
 
       # Schedule an update to root hints on the first and third Monday of each month
-      37 13 1-7,15-21 * Mon    root    (cd /usr/local/etc/unbound && fetch -a -m https://www.internic.net/domain/named.cache && service unbound reload)
+      37 13 1-7,15-21 * Mon    root    (cd /usr/local/etc/unbound && fetch -a -m https://www.internic.net/domain/named.cache && service unbound restart)
     dest: /etc/cron.d/update-unbound-root-hints
 - name: Enable Unbound
   service:

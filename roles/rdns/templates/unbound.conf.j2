@@ -1,0 +1,21 @@
+#
+# Managed by ansible
+#
+# See unbound.conf(5) man page, version 1.9.6.
+
+server:
+	verbosity: 1
+
+    interface: 127.0.0.1
+	interface: ::1
+{% for listen_address in services[inventory_hostname]["dns"]["addresses"] %}
+	interface: {{ listen_address }}
+{% endfor %}
+
+{% for network in local_networks %}
+	access-control: {{ network["prefix"] }}/{{ network["prefixlen"] }} allow
+{% endfor %}
+
+	# file to read root hints from.
+	# get one from https://www.internic.net/domain/named.cache
+	root-hints: "named.cache"

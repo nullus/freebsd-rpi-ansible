@@ -15,7 +15,14 @@ restrict source  limited kod nomodify notrap noquery
 restrict 127.0.0.1
 restrict ::1
 
-restrict 192.168.92.0 mask 255.255.255.0 nomodify notrap nopeer
-restrict 2001:470:1f2d:aa:: mask ffff:ffff:ffff:ffff:: nomodify notrap nopeer
+{% for network in local_networks %}
+restrict {{ network["prefix"] }} mask {{ network["netmask"] }} nomodify notrap nopeer
+{% endfor %}
+
+interface ::1
+interface 127.0.0.1
+{% for listen_address in services[inventory_hostname]["ntp"]["addresses"] %}
+interface {{ listen_address }}
+{% endfor %}
 
 leapfile "/var/db/ntpd.leap-seconds.list"
