@@ -38,3 +38,17 @@
     path: /etc/rc.conf
     regexp: '^ifconfig_DEFAULT'
     state: absent
+- name: Enable IPv6 temporary addresses
+  sysctl:
+    name: net.inet6.ip6.use_tempaddr
+    value: '1'
+    sysctl_set: yes
+    state: present
+    reload: yes
+- name: Prefer use of IPv6 temporary addresses
+  sysctl:
+    name: net.inet6.ip6.prefer_tempaddr
+    value: '1'
+    sysctl_set: yes
+    state: present
+    reload: yes
