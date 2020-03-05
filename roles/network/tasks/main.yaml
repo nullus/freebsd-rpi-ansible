@@ -15,12 +15,6 @@
   service:
     name: rtsold
     enabled: yes
-- name: Disable rtsold resolvconf update
-  copy:
-    # Use /usr/bin/true to disable updating resolv.conf
-    content: |
-      rtsold_flags="-a -R /usr/bin/true"
-    dest: /etc/rc.conf.d/rtsold
 - name: Configure routing
   copy:
     content: |
@@ -29,10 +23,8 @@
 - name: Configure name resolution
   copy:
     content: |
-      search {{ site_domain }}
-      nameserver ::1
-      nameserver 127.0.0.1
-    dest: /etc/resolv.conf
+      name_servers="::1 127.0.0.1"
+    dest: /etc/resolvconf.conf
 - name: Remove default DHCP
   lineinfile:
     path: /etc/rc.conf
@@ -44,11 +36,9 @@
     value: '1'
     sysctl_set: yes
     state: present
-    reload: yes
 - name: Prefer use of IPv6 temporary addresses
   sysctl:
     name: net.inet6.ip6.prefer_tempaddr
     value: '1'
     sysctl_set: yes
     state: present
-    reload: yes
