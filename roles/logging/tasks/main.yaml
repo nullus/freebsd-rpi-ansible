@@ -8,6 +8,11 @@
     name: syslog-ng
     enabled: yes
   notify: restart syslog-ng
+- name: Configure syslog-ng
+  template:
+    src: syslog-ng.conf.j2
+    dest: /usr/local/etc/syslog-ng.conf
+  notify: restart syslog-ng
 - name: Disable base syslogd
   service:
     name: syslogd

@@ -50,3 +50,4 @@
 - Rewrite bootstrap as raw/no facts playbook (implement for upgrade?)
 - ~~Ship logs externally (e.g. graylog?)~~ somewhat working Loggly config, but it's a bit bogus right now
 - Determine a task/handler configuration for transition to provisioned
+- Authoritative DNS for local domains (in-addr.arpa, in6.arpa)
