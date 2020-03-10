@@ -51,3 +51,4 @@
 - ~~Ship logs externally (e.g. graylog?)~~ somewhat working Loggly config, but it's a bit bogus right now
 - Determine a task/handler configuration for transition to provisioned
 - Authoritative DNS for local domains (in-addr.arpa, in6.arpa)
+- GPS hat/antenna to provide stratum 1 NTP clock
