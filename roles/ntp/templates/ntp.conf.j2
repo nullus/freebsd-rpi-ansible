@@ -19,10 +19,10 @@ restrict ::1
 restrict {{ network["prefix"] }} mask {{ network["netmask"] }} nomodify notrap nopeer
 {% endfor %}
 
-interface ::1
-interface 127.0.0.1
+interface listen ::1
+interface listen 127.0.0.1
 {% for listen_address in services[inventory_hostname]["ntp"]["addresses"] %}
-interface {{ listen_address }}
+interface listen {{ listen_address }}
 {% endfor %}
 
 leapfile "/var/db/ntpd.leap-seconds.list"
