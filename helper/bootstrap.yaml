@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: true
+  become_method: su
+  remote_user: freebsd
+  gather_facts: false
+  tasks:
+    - name: Bootstrap FreeBSD host
+      raw: "pkg bootstrap -y && pkg install -y sudo python && echo '%wheel ALL=(ALL) NOPASSWD: ALL' > /usr/local/etc/sudoers.d/wheel_nopasswd"

@@ -9,11 +9,15 @@
        http GET https://download.freebsd.org/ftp/releases/arm/armv7/ISO-IMAGES/12.1/FreeBSD-12.1-RELEASE-arm-armv7-RPI2.img.xz > img.xz
        xzcat img.xz | sudo dd of=/dev/disk2 bs=1048576    
 2. Boot RPi2 using new SD card
-3. Transfer public key, and bootstrap script to RPi2
-4. Run bootstrap script on RPi2:
+3. Do bootstrapping:
 
-       sh bootstrap.sh pubkey
-5. Create environment specific variables in env.yaml:
+        # Create .ssh/config entry for provision host
+        scp helper/bootstrap.sh freebsd@provision:
+        ssh freebsd@provision 'sh bootstrap.sh'
+        # Enter public key string when prompted
+        ansible-playbook -K -i provision, helper/bootstrap.yaml
+        # ... this takes awhile
+4. Create environment specific variables in env.yaml:
 
        ---
        admin_email: ...
@@ -52,3 +56,10 @@
 - Determine a task/handler configuration for transition to provisioned
 - Authoritative DNS for local domains (in-addr.arpa, in6.arpa)
 - GPS hat/antenna to provide stratum 1 NTP clock
+
+### Bugs
+
+- First run (without network restart):
+
+        RUNNING HANDLER [rdns : restart unbound] *******************************************************************************************
+        fatal: [rpi]: FAILED! => {"changed": false, "msg": "unbound not running? (check /usr/local/etc/unbound/unbound.pid).\n[1572585006] unbound[3226:0] error: can't bind socket: Can't assign requested address for 192.168.92.8 port 53\n[1572585006] unbound[3226:0] fatal error: could not open ports\n/usr/local/etc/rc.d/unbound: WARNING: failed to start unbound\n"}

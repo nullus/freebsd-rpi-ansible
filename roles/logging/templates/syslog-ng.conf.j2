@@ -219,10 +219,8 @@ log {
    source(src);
    source(net);
    destination {
-      # FIXME: Using this rather than the scl template until my upstream fixes
-      # are incorporated. Note: the certs have been hand added (also waiting
-      # on a loggly fix
-      network("logs-01.loggly.com" port(6514) transport(tls) tls(peer-verify(required-trusted) ca-dir('/usr/local/etc/ssl/certs'))
+      # TODO: Use scl template!
+      network("logs-01.loggly.com" port(6514) transport(tls) tls(peer-verify(required-trusted) ca-file('/etc/ssl/cert.pem'))
          template("<${PRI}>1 ${ISODATE} ${HOST:--} ${PROGRAM:--} ${PID:--} ${MSGID:--} [{{ loggly_user_token }}@41058] ${MSG}\n")
          template_escape(no)
       );
