@@ -63,6 +63,29 @@
       cron_flags="-m {{ admin_email }}"
     dest: /etc/rc.conf.d/cron
   notify: restart cron
+- name: Reschedule default crontab entries
+  block:
+  # Use lineinfile, Ansible cron doesn't play well with existing entries
+  - name: Periodic daily
+    lineinfile:
+      path: /etc/crontab
+      regexp: 'periodic daily$'
+      line: '1	13	*	*	*	root	periodic daily'
+  - name: Periodic weekly
+    lineinfile:
+      path: /etc/crontab
+      regexp: 'periodic weekly$'
+      line: '15	14	*	*	6	root	periodic weekly'
+  - name: Periodic monthly
+    lineinfile:
+      path: /etc/crontab
+      regexp: 'periodic monthly$'
+      line: '30	15	1	*	*	root	periodic monthly'
+  - name: Adjust kernel timezone
+    lineinfile:
+      path: /etc/crontab    
+      regexp: 'adjkerntz -a$'
+      line: '# 1,31	0-5	*	*	*	root	adjkerntz -a'
 - name: Set user password
   user:
     name: freebsd
