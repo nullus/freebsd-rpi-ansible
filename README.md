@@ -13,9 +13,9 @@
 
         # Create .ssh/config entry for provision host
         scp helper/bootstrap.sh freebsd@provision:
-        ssh freebsd@provision 'sh bootstrap.sh'
+        ssh -t rpi 'sh bootstrap.sh'
         # Enter public key string when prompted
-        ansible-playbook -K -i provision, helper/bootstrap.yaml
+        ansible-playbook -K helper/bootstrap.yaml
         # ... this takes awhile
 4. Create environment specific variables in env.yaml:
 
@@ -47,19 +47,14 @@
 
 5. Run playbook to configure device:
 
-       ansible-playbook -e @env.yaml -i hosts site.yaml
+       ansible-playbook -e @env.yaml site.yaml
 
 ### To Do
 
-- Rewrite bootstrap as raw/no facts playbook (implement for upgrade?)
-- ~~Ship logs externally (e.g. graylog?)~~ somewhat working Loggly config, but it's a bit bogus right now
-- Determine a task/handler configuration for transition to provisioned
+- Combine shell/ansible bootstrap
 - Authoritative DNS for local domains (in-addr.arpa, in6.arpa)
 - GPS hat/antenna to provide stratum 1 NTP clock
 
 ### Bugs
 
-- First run (without network restart):
-
-        RUNNING HANDLER [rdns : restart unbound] *******************************************************************************************
-        fatal: [rpi]: FAILED! => {"changed": false, "msg": "unbound not running? (check /usr/local/etc/unbound/unbound.pid).\n[1572585006] unbound[3226:0] error: can't bind socket: Can't assign requested address for 192.168.92.8 port 53\n[1572585006] unbound[3226:0] fatal error: could not open ports\n/usr/local/etc/rc.d/unbound: WARNING: failed to start unbound\n"}
+⚠️ Will need to attempt clean build again to determine if all dependency issues are resolved

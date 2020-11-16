@@ -4,6 +4,9 @@
     name: ntpd
     enabled: yes
   notify: restart ntpd
+- name: Synchronise clock
+  command:
+    argv: ['ntpdate', 'au.pool.ntp.org']
 - name: Synchronise ntpd on startup
   copy:
     content: |

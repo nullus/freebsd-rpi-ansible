@@ -28,4 +28,8 @@
   service:
     name: unbound
     enabled: yes
-    
+- name: Configure name resolution
+  copy:
+    content: |
+      name_servers="::1 127.0.0.1"
+    dest: /etc/resolvconf.conf
