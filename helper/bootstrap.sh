@@ -12,9 +12,6 @@ set -ueo pipefail
 # FIXME: Not echo without -t?
 read -p "Public key line: " pubkey
 
-umask 022
+ssh freebsd@rpi 'umask 022 && mkdir -p /home/freebsd/.ssh && echo "'"$pubkey"'" > /home/freebsd/.ssh/authorized_keys'
 
-mkdir -p /home/freebsd/.ssh &&
-  echo $pubkey > /home/freebsd/.ssh/authorized_keys &&
-  rm $0
-
+ansible-playbook -K helper/bootstrap.yaml

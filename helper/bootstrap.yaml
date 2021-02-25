@@ -5,11 +5,11 @@
   remote_user: freebsd
   gather_facts: false
   tasks:
-    - name: Bootstrap FreeBSD pkg
-      raw: "pkg bootstrap -y"
     - name: Install sudo 
       raw: "pkg install -y sudo" 
     - name: Install python
       raw: "pkg install -y python" 
     - name: Allow sudo without password for wheel
       raw: "echo '%wheel ALL=(ALL) NOPASSWD: ALL' > /usr/local/etc/sudoers.d/wheel_nopasswd"
+    - name: Set time from NTP
+      raw: "sudo ntpdate 0.freebsd.pool.ntp.org"
